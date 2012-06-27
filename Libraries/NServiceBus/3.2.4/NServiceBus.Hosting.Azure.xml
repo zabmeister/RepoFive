@@ -1,0 +1,464 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>NServiceBus.Hosting.Azure</name>
+  </assembly>
+  <members>
+    <member name="T:NServiceBus.EndpointNameAttribute">
+      <summary>
+            Used to specify the name of the current endpoint.
+            Will be used as the name of the input queue as well.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.EndpointNameAttribute.#ctor(System.String)">
+      <summary>
+            Used to specify the name of the current endpoint.
+            Will be used as the name of the input queue as well.
+            </summary>
+      <param name="name">
+      </param>
+    </member>
+    <member name="P:NServiceBus.EndpointNameAttribute.Name">
+      <summary>
+            The name of the endpoint.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.EndpointSLAAttribute">
+      <summary>
+            Defines the SLA for this endpoint. Needs to be set on the endpoint configuration class
+            </summary>
+    </member>
+    <member name="M:NServiceBus.EndpointSLAAttribute.#ctor(System.String)">
+      <summary>
+            Used to define the SLA for this endpoint
+            </summary>
+      <param name="sla">A timespan</param>
+    </member>
+    <member name="P:NServiceBus.EndpointSLAAttribute.SLA">
+      <summary>
+            The SLA of the endpoint.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.IWantCustomInitialization">
+      <summary>
+            If you want to specify your own container or serializer,
+            implement this interface on the class which implements <see cref="T:NServiceBus.IConfigureThisEndpoint" />.
+            
+            Implementors will be invoked before the endpoint starts up.
+            Dependency injection is not provided for these types.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.IWantCustomInitialization.Init">
+      <summary>
+            Perform initialization logic.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.IWantTheEndpointConfig">
+      <summary>
+            Implementors will be provided with a reference to IConfigureThisEndpoint.
+            Implementors must inherit either <see cref="T:NServiceBus.Hosting.Profiles.IHandleProfile" /> or <see cref="T:NServiceBus.IWantCustomInitialization" />.
+            </summary>
+    </member>
+    <member name="P:NServiceBus.IWantTheEndpointConfig.Config">
+      <summary>
+            This property will be set by the infrastructure.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Helpers.AssemblyScanner">
+      <summary>
+            Helpers for assembly scanning operations
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Helpers.AssemblyScanner.GetScannableAssemblies">
+      <summary>
+            Gets a list of assemblies that can be scanned and a list of errors that occurred while scanning.
+            
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="T:NServiceBus.Hosting.Configuration.ConfigManager">
+      <summary>
+            Configures the host upon startup
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Configuration.ConfigManager.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.Assembly},NServiceBus.IConfigureThisEndpoint)">
+      <summary>
+            Contructs the manager with the given user configuration and the list of assemblies that should be scanned
+            </summary>
+      <param name="assembliesToScan">
+      </param>
+      <param name="specifier">
+      </param>
+    </member>
+    <member name="M:NServiceBus.Hosting.Configuration.ConfigManager.ConfigureCustomInitAndStartup">
+      <summary>
+            Configures the user classes that need custom config and those that are marked to run at startup
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Configuration.ConfigManager.Startup">
+      <summary>
+            Executes the user classes that are marked as "run at startup"
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Configuration.ConfigManager.Shutdown">
+      <summary>
+            Shutsdown the user classes started earlier
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.IHost">
+      <summary>
+            Identifies a host
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.IHost.Start">
+      <summary>
+            Does startup work.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.IHost.Stop">
+      <summary>
+            Does shutdown work.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.IHost.Install``1">
+      <summary>
+            Performs nessesary installation
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.GenericHost">
+      <summary>
+            A generic host that can be used to provide hosting services in different environments
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.GenericHost.Start">
+      <summary>
+            Creates and starts the bus as per the configuration
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.GenericHost.Stop">
+      <summary>
+            Finalize
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.GenericHost.Install``1">
+      <summary>
+            When installing as windows service (/install), run infrastructure installers
+            </summary>
+      <typeparam name="TEnvironment">
+      </typeparam>
+    </member>
+    <member name="M:NServiceBus.Hosting.GenericHost.#ctor(NServiceBus.IConfigureThisEndpoint,System.String[],System.Collections.Generic.IEnumerable{System.Type},System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>
+            Accepts the type which will specify the users custom configuration.
+            This type should implement <see cref="T:NServiceBus.IConfigureThisEndpoint" />.
+            </summary>
+      <param name="specifier">
+      </param>
+      <param name="args">
+      </param>
+      <param name="defaultProfiles">
+      </param>
+      <param name="endpointName">
+      </param>
+      <param name="scannableAssembliesFullName">Assemblies full name that were scanned.</param>
+    </member>
+    <member name="T:NServiceBus.IConfigureLogging">
+      <summary>
+            Called in order to configure logging.
+            
+            If you want logging configured regardless of profiles, do not use this interface,
+            instead implement <see cref="T:NServiceBus.IWantCustomLogging" /> on the class which implements <see cref="T:NServiceBus.IConfigureThisEndpoint" />.
+            
+            Implementors should work against the generic version of this interface.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.IConfigureLogging.Configure(NServiceBus.IConfigureThisEndpoint)">
+      <summary>
+            Performs all logging configuration.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.IConfigureLoggingForProfile`1">
+      <summary>
+            Called in order to configure logging for the given profile type.
+            If an implementation isn't found for a given profile, then the search continues
+            recursively up that profile's inheritance hierarchy.
+            </summary>
+      <typeparam name="T">
+      </typeparam>
+    </member>
+    <member name="T:NServiceBus.Hosting.Helpers.AssemblyScannerResults">
+      <summary>
+            Holds GetScannableAssemblies results.
+            Contains list of errors and list of scan-able assemblies.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Helpers.AssemblyScannerResults.#ctor">
+      <summary>
+            Constructor to initialize AssemblyScannerResults
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Helpers.AssemblyScannerResults.ToString">
+      <summary>
+            Dump error to console.
+            </summary>
+    </member>
+    <member name="P:NServiceBus.Hosting.Helpers.AssemblyScannerResults.Errors">
+      <summary>
+            List of errors that occurred during 
+            </summary>
+    </member>
+    <member name="P:NServiceBus.Hosting.Helpers.AssemblyScannerResults.Assemblies">
+      <summary>
+      </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Helpers.ErrorWhileScanningAssemblies">
+      <summary>
+            Error information that occurred while scanning assemblies.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Helpers.ErrorWhileScanningAssemblies.#ctor(System.Exception,System.String)">
+      <summary>
+            Adding an error
+            </summary>
+      <param name="ex">
+      </param>
+      <param name="errorMessage">
+      </param>
+    </member>
+    <member name="M:NServiceBus.Hosting.Helpers.ErrorWhileScanningAssemblies.ToString">
+      <summary>
+            Convert to string errors while scanning assemblies
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="P:NServiceBus.Hosting.Helpers.ErrorWhileScanningAssemblies.ErrorMessage">
+      <summary>
+            Exception message.
+            </summary>
+    </member>
+    <member name="P:NServiceBus.Hosting.Helpers.ErrorWhileScanningAssemblies.Exception">
+      <summary>
+            Exception that occurred.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.INameThisEndpoint">
+      <summary>
+            Implement this interface in the endpoint configuration class if you want to give this endpoint your own name
+            </summary>
+    </member>
+    <member name="M:NServiceBus.INameThisEndpoint.GetName">
+      <summary>
+            Returns the name to be used for this endpoint
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="T:NServiceBus.Hosting.Profiles.IHandleProfile">
+      <summary>
+            Abstraction for code which will be called when the given profile is active.
+            Implementors should implement IHandleProfile{T} rather than IHandleProfile.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Profiles.IHandleProfile.ProfileActivated">
+      <summary>
+            Called when a given profile is activated.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Profiles.IHandleProfile`1">
+      <summary>
+            Generic abstraction for code which will be called when the given profile is active.
+            </summary>
+      <typeparam name="T">
+      </typeparam>
+    </member>
+    <member name="T:NServiceBus.IProfile">
+      <summary>
+            Marker interface to indicate a run-time profile.
+            Implementors must be concrete class - interfaces are not supported.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.IWantCustomLogging">
+      <summary>
+            If you want to specify your own logging,
+            implement this interface on the class which implements <see cref="T:NServiceBus.IConfigureThisEndpoint" />. 
+            </summary>
+    </member>
+    <member name="M:NServiceBus.IWantCustomLogging.Init">
+      <summary>
+            Initialize logging.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.IWantToRunAtStartup">
+      <summary>
+            Implementers will be invoked when the endpoint starts up.
+            Dependency injection is provided for these types.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.IWantToRunAtStartup.Run">
+      <summary>
+            Method called at startup.
+            </summary>
+    </member>
+    <member name="M:NServiceBus.IWantToRunAtStartup.Stop">
+      <summary>
+            Method called on shutdown.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.IWantTheListOfActiveProfiles">
+      <summary>
+            Implementors will recieve by <see cref="T:NServiceBus.Hosting.Profiles.ProfileManager" /> the list of active Profiles. 
+            Implementors must implement <see cref="T:NServiceBus.Hosting.Profiles.IHandleProfile" />.
+            </summary>
+    </member>
+    <member name="P:NServiceBus.IWantTheListOfActiveProfiles.ActiveProfiles">
+      <summary>
+            ActiveProfiles list will be set by the infrastructure.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Profiles.ProfileActivator">
+      <summary>
+            Activates the profiles to be used
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Profiles.ProfileActivator.Run">
+      <summary>
+            Activate profile handlers
+            </summary>
+    </member>
+    <member name="P:NServiceBus.Hosting.Profiles.ProfileActivator.ProfileManager">
+      <summary>
+            The profile manager
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Profiles.ProfileManager">
+      <summary>
+            Scans and loads profile handlers from the given assemblies
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Profiles.ProfileManager.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.Assembly},NServiceBus.IConfigureThisEndpoint,System.String[],System.Collections.Generic.IEnumerable{System.Type})">
+      <summary>
+            Initializes the manager with the assemblies to scan and the endpoint configuration to use
+            </summary>
+      <param name="assembliesToScan">
+      </param>
+      <param name="specifier">
+      </param>
+      <param name="args">
+      </param>
+      <param name="defaultProfiles">
+      </param>
+    </member>
+    <member name="M:NServiceBus.Hosting.Profiles.ProfileManager.GetLoggingConfigurer">
+      <summary>
+            Returns an object to configure logging based on the specification and profiles passed in.
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:NServiceBus.Hosting.Profiles.ProfileManager.ActivateProfileHandlers">
+      <summary>
+            Activates the profile handlers that handle the previously identified active profiles. 
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="T:NServiceBus.Hosting.Roles.IConfigureRole">
+      <summary>
+            Interface that enables configuration based on specified role
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Roles.IConfigureRole.ConfigureRole(NServiceBus.IConfigureThisEndpoint)">
+      <summary>
+            Applies the role configuration
+            </summary>
+      <param name="specifier">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="T:NServiceBus.Hosting.Roles.IConfigureRole`1">
+      <summary>
+            Generic helper interface for IConfigureRole
+            </summary>
+      <typeparam name="T">
+      </typeparam>
+    </member>
+    <member name="T:NServiceBus.IConfigureThisEndpoint">
+      <summary>
+            Indicate that the implementing class will specify configuration.
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Roles.IRole">
+      <summary>
+            Marker interface for roles
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Roles.RoleManager">
+      <summary>
+            Handles the different roles that are registered
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Roles.RoleManager.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+      <summary>
+            Creates the manager with the list of assemblies to scan for roles
+            </summary>
+      <param name="assembliesToScan">
+      </param>
+    </member>
+    <member name="M:NServiceBus.Hosting.Roles.RoleManager.ConfigureBusForEndpoint(NServiceBus.IConfigureThisEndpoint)">
+      <summary>
+            Checks if the specifier contains a given role and uses it to configure the UnicastBus appropriately.
+            </summary>
+      <param name="specifier">
+      </param>
+    </member>
+    <member name="T:NServiceBus.Hosting.Wcf.WcfManager">
+      <summary>
+            Enable users to expose messages as WCF services
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Wcf.WcfManager.#ctor(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+      <summary>
+            Initlalized the manager with the list of assemblies to be scanned
+            </summary>
+      <param name="assembliesToScan">
+      </param>
+    </member>
+    <member name="M:NServiceBus.Hosting.Wcf.WcfManager.Startup">
+      <summary>
+            Starts a servicehost for each found service. Defaults to BasicHttpBinding if
+            no user specified binding is found
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Wcf.WcfManager.Shutdown">
+      <summary>
+            Shutsdown the service hosts
+            </summary>
+    </member>
+    <member name="T:NServiceBus.Hosting.Wcf.WcfServiceHost">
+      <summary>
+            A specialized service host that adds a default endpoint if non is specified in config
+            </summary>
+    </member>
+    <member name="M:NServiceBus.Hosting.Wcf.WcfServiceHost.#ctor(System.Type)">
+      <summary>
+            Constructs the host with the given service type
+            </summary>
+      <param name="t">
+      </param>
+    </member>
+    <member name="M:NServiceBus.Hosting.Wcf.WcfServiceHost.AddDefaultEndpoint(System.Type,System.ServiceModel.Channels.Binding,System.String)">
+      <summary>
+            Adds the given endpoint unless its already configured in app.config
+            </summary>
+      <param name="contractType">
+      </param>
+      <param name="binding">
+      </param>
+      <param name="address">
+      </param>
+    </member>
+  </members>
+</doc>

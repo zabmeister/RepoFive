@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NServiceBus.ObjectBuilder.Spring</name>
+    </assembly>
+    <members>
+        <member name="T:NServiceBus.ConfigureSpringBuilder">
+            <summary>
+            Contains extension methods to NServiceBus.Configure for configuring the Spring container.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.ConfigureSpringBuilder.SpringFrameworkBuilder(NServiceBus.Configure)">
+            <summary>
+            Use the Spring Framework as the container.
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NServiceBus.ConfigureSpringBuilder.SpringFrameworkBuilder(NServiceBus.Configure,Spring.Context.Support.GenericApplicationContext)">
+            <summary>
+            Use the Spring Framework as the container with the inilialized application context
+            </summary>
+            <param name="config"></param>
+            <param name="applicationContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NServiceBus.ObjectBuilder.Spring.SpringObjectBuilder">
+            <summary>
+            Implementation of IBuilderInternal using the Spring Framework container
+            </summary>
+        </member>
+        <member name="M:NServiceBus.ObjectBuilder.Spring.SpringObjectBuilder.#ctor">
+            <summary>
+            Instantiates the builder using a new GenericApplicationContext.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.ObjectBuilder.Spring.SpringObjectBuilder.#ctor(Spring.Context.Support.GenericApplicationContext)">
+            <summary>
+            Instantiates the builder using the given container.
+            </summary>
+            <param name="container"></param>
+        </member>
+        <member name="M:NServiceBus.ObjectBuilder.Spring.SpringObjectBuilder.Dispose">
+            <summary>
+            No resources to dispose.
+            </summary>
+        </member>
+    </members>
+</doc>
